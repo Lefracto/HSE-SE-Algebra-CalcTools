@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HSE-SE-Algebra-CalcTools", "HSE-SE-Algebra-CalcTools\HSE-SE-Algebra-CalcTools.csproj", "{7D7DB1B9-1288-42A2-8F28-7B04206EB93D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcToolsIO", "CalcToolsIO\CalcToolsIO.csproj", "{7D7DB1B9-1288-42A2-8F28-7B04206EB93D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathObjects", "MathObjects\MathObjects.csproj", "{1B212C4C-B4C3-4D85-BBFC-8CE524CB556F}"
 EndProject

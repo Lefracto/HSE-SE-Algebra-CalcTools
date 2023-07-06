@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\USER\\Desktop\\CalcTools\\HSE-SE-Algebra-CalcTools\\MathObjects\\MathObjects.csproj",
+      "projectUniqueName": "D:\\Repositories\\CalcTools\\HSE-SE-Algebra-CalcTools\\MathObjects\\MathObjects.csproj",
       "projectName": "MathObjects",
-      "projectPath": "C:\\Users\\USER\\Desktop\\CalcTools\\HSE-SE-Algebra-CalcTools\\MathObjects\\MathObjects.csproj",
+      "projectPath": "D:\\Repositories\\CalcTools\\HSE-SE-Algebra-CalcTools\\MathObjects\\MathObjects.csproj",
       "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\USER\\Desktop\\CalcTools\\HSE-SE-Algebra-CalcTools\\MathObjects\\obj\\",
+      "outputPath": "D:\\Repositories\\CalcTools\\HSE-SE-Algebra-CalcTools\\MathObjects\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config"
