@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HSE-SE-Algebra-CalcTools", "HSE-SE-Algebra-CalcTools\HSE-SE-Algebra-CalcTools.csproj", "{7D7DB1B9-1288-42A2-8F28-7B04206EB93D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathObjects", "MathObjects\MathObjects.csproj", "{1B212C4C-B4C3-4D85-BBFC-8CE524CB556F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7D7DB1B9-1288-42A2-8F28-7B04206EB93D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D7DB1B9-1288-42A2-8F28-7B04206EB93D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D7DB1B9-1288-42A2-8F28-7B04206EB93D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D7DB1B9-1288-42A2-8F28-7B04206EB93D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B212C4C-B4C3-4D85-BBFC-8CE524CB556F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B212C4C-B4C3-4D85-BBFC-8CE524CB556F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B212C4C-B4C3-4D85-BBFC-8CE524CB556F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B212C4C-B4C3-4D85-BBFC-8CE524CB556F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
