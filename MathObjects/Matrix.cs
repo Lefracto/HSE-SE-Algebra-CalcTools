@@ -8,28 +8,49 @@ namespace MathObjects
 
         public Matrix(T[][] cellValues)
         {
+            //TODO: Check for an exception and additional criteria
             _values = cellValues;
         }
 
         private T this [int line, int column]
         {
+            //TODO: Check for an exception
+            
             get =>  _values[line][column];
             set => _values[line][column] = value;
         }
         
-        public static void ReadMatrixFromConsole(Matrix<T> matrix)
+        public static void ReadMatrix(Matrix<T> matrix, string input)
         {
+            //TODO: Check for an exception
             
+            var lines = input.Split('\n');
+            for (var i = 0; i < lines.Length; i++)
+            {
+                var elements = lines[i].Split(' ');
+                for (var j = 0; j < lines[i].Length; j++)
+                {
+                    matrix._values[i][j] =  (T)matrix._values[i][j].ReadCellData(elements[j]);
+                }
+            }
         }
-
-        public static void ReadMatrixFromFile(Matrix<T> matrix)
-        {
-           
-        }
-
+        
         public void Transpose()
         {
+            var lines = _values.Length;
+            var columns = _values[0].Length;
+            var newValues = new T[columns][];
             
+            for (var i = 0; i < columns; i++)
+            {
+                newValues[i] = new T[lines];
+                for (var j = 0; j < lines; j++)
+                {
+                    newValues[i][j] = _values[j][i];
+                }
+            }
+
+            _values = newValues;
         }
 
         public void AddLine(int firstLineIndex, int secondLineIndex, MatrixCellData k)
@@ -45,6 +66,15 @@ namespace MathObjects
             foreach (var t in _values)
             {
                 t[firstColumnIndex] = (T)(t[firstColumnIndex] + k * t[secondColumnIndex]);
+            }
+        }
+
+        public MatrixCellData Determinant
+        {
+            ////TODO: Determinant using Gauss
+            get
+            {
+                return _values[0][0];
             }
         }
         
