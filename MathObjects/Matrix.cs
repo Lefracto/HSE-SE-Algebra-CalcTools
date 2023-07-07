@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace MathObjects
 {
@@ -6,6 +7,9 @@ namespace MathObjects
     {
         private T[][] _values;
 
+        private int LinesCount => _values.Length;
+        private int ColumnsCount => _values[0].Length;
+        
         public Matrix(T[][] cellValues)
         {
             //TODO: Check for an exception and additional criteria
@@ -37,14 +41,12 @@ namespace MathObjects
         
         public void Transpose()
         {
-            var lines = _values.Length;
-            var columns = _values[0].Length;
-            var newValues = new T[columns][];
+            var newValues = new T[ColumnsCount][];
             
-            for (var i = 0; i < columns; i++)
+            for (var i = 0; i < ColumnsCount; i++)
             {
-                newValues[i] = new T[lines];
-                for (var j = 0; j < lines; j++)
+                newValues[i] = new T[LinesCount];
+                for (var j = 0; j < LinesCount; j++)
                 {
                     newValues[i][j] = _values[j][i];
                 }
@@ -55,7 +57,7 @@ namespace MathObjects
 
         public void AddLine(int firstLineIndex, int secondLineIndex, MatrixCellData k)
         {
-            for (var i = 0; i < _values[0].Length; i++)
+            for (var i = 0; i < ColumnsCount; i++)
             {
                 _values[firstLineIndex][i] = (T)(_values[firstLineIndex][i] + k * _values[secondLineIndex][i]);
             }
@@ -80,9 +82,9 @@ namespace MathObjects
         
         public static Matrix<T> operator -(Matrix<T> matrix)
         {
-            for (var i = 0; i < matrix._values.Length; i++)
+            for (var i = 0; i < matrix.LinesCount; i++)
             {
-                for (var j = 0; j < matrix._values[0].Length; j++)
+                for (var j = 0; j < matrix.ColumnsCount; j++)
                 {
                     matrix[i, j] = (T)(matrix[i, j].GetInverseByAddition());
                 }
@@ -92,15 +94,11 @@ namespace MathObjects
         
         public static Matrix<T> operator +(Matrix<T> matrix1, Matrix<T> matrix2)
         {
-            var lines = matrix1._values.Length;
-            var columns = matrix2._values[0].Length;
-            
-            var newCellValues = new T[lines][];
-
-            for (var i = 0; i < lines; i++)
+            var newCellValues = new T[matrix1.LinesCount][];
+            for (var i = 0; i < matrix1.LinesCount; i++)
             {
-                newCellValues[i] = new T[columns];
-                for (var j = 0; j < columns; j++)
+                newCellValues[i] = new T[matrix2.ColumnsCount];
+                for (var j = 0; j < matrix2.ColumnsCount; j++)
                 {
                     newCellValues[i][j] = (T)(matrix1[i,j] + matrix2[i,j]);
                 }
@@ -111,6 +109,39 @@ namespace MathObjects
         
         public static Matrix<T> operator -(Matrix<T> matrix1, Matrix<T> matrix2)
             =>  matrix1 + (-matrix2);
+        
+        public static Matrix<T> operator *(Matrix<T> matrix1, Matrix<T> matrix2)
+        {
+            if (matrix1.ColumnsCount != matrix2.LinesCount)
+            {
+                //exception
+            }
+            
+            var newCellValues = new T[matrix1.LinesCount][];
+
+            for (var i = 0; i < matrix1.LinesCount; i++)
+            {
+                newCellValues[i] = new T[matrix2.ColumnsCount];
+                for (var j = 0; j < matrix2.ColumnsCount; j++)
+                {
+                    newCellValues[i][j] = GetProductElement(i, j, matrix1, matrix2);
+                }
+            }
+            
+            return new Matrix<T>(newCellValues);
+        }
+
+        private static T GetProductElement(int i, int j, Matrix<T> matrix1, Matrix<T> matrix2)
+        {
+            ///TODO
+            T productElement = (T)(matrix1[i,0] * matrix2[0, j]);
+            for (var k = 1; i < matrix1.ColumnsCount; i++)
+            { 
+                //productElement += (T)(matrix1[i,0] * matrix2[0, j]); It does not work =(
+            }
+            
+            return productElement;
+        }
         
         public override string ToString()
         {
