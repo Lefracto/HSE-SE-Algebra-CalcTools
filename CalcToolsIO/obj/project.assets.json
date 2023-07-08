@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {}
+    "net5.0": {
+      "MathObjects/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/MathObjects.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MathObjects.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "MathObjects/1.0.0": {
+      "type": "project",
+      "path": "../MathObjects/MathObjects.csproj",
+      "msbuildProject": "../MathObjects/MathObjects.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net5.0": []
+    "net5.0": [
+      "MathObjects >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\USER\\.nuget\\packages\\": {}
@@ -31,7 +50,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Repositories\\CalcTools\\HSE-SE-Algebra-CalcTools\\MathObjects\\MathObjects.csproj": {
+              "projectPath": "D:\\Repositories\\CalcTools\\HSE-SE-Algebra-CalcTools\\MathObjects\\MathObjects.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

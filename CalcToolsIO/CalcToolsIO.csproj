@@ -6,4 +6,8 @@
         <RootNamespace>HSE_SE_Algebra_CalcTools</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\MathObjects\MathObjects.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -57,17 +57,37 @@ namespace MathObjects
 
         public void AddLine(int firstLineIndex, int secondLineIndex, MatrixCellData k)
         {
+            if (firstLineIndex < 0 || secondLineIndex < 0)
+            {
+                // exception
+            }
+
+            if (k is null)
+            {
+                //exception
+            }
+            
             for (var i = 0; i < ColumnsCount; i++)
             {
-                _values[firstLineIndex][i] = (T)(_values[firstLineIndex][i] + k * _values[secondLineIndex][i]);
+                _values[firstLineIndex][i] = (T)_values[firstLineIndex][i].Add(_values[secondLineIndex][i].Multiply(k));
             }
         }
         
         public void AddColumn(int firstColumnIndex, int secondColumnIndex, MatrixCellData k)
         {
+            if (firstColumnIndex < 0 || secondColumnIndex < 0)
+            {
+                // exception
+            }
+
+            if (k is null)
+            {
+                //exception
+            }
+            
             foreach (var t in _values)
             {
-                t[firstColumnIndex] = (T)(t[firstColumnIndex] + k * t[secondColumnIndex]);
+                t[firstColumnIndex] = (T)t[firstColumnIndex].Add(t[secondColumnIndex].Multiply(k));
             }
         }
 
@@ -76,6 +96,10 @@ namespace MathObjects
             ////TODO: Determinant using Gauss
             get
             {
+                if (LinesCount != ColumnsCount)
+                {
+                    //exception
+                }
                 return _values[0][0];
             }
         }
@@ -94,13 +118,18 @@ namespace MathObjects
         
         public static Matrix<T> operator +(Matrix<T> matrix1, Matrix<T> matrix2)
         {
+            if (matrix1.LinesCount != matrix2.LinesCount || matrix1.ColumnsCount != matrix2.ColumnsCount)
+            {
+                //exception
+            }
+            
             var newCellValues = new T[matrix1.LinesCount][];
             for (var i = 0; i < matrix1.LinesCount; i++)
             {
                 newCellValues[i] = new T[matrix2.ColumnsCount];
                 for (var j = 0; j < matrix2.ColumnsCount; j++)
                 {
-                    newCellValues[i][j] = (T)(matrix1[i,j] + matrix2[i,j]);
+                    newCellValues[i][j] = (T)(matrix1[i,j].Add(matrix2[i,j]));
                 }
             }
 
@@ -133,11 +162,10 @@ namespace MathObjects
 
         private static T GetProductElement(int i, int j, Matrix<T> matrix1, Matrix<T> matrix2)
         {
-            ///TODO
-            T productElement = (T)(matrix1[i,0] * matrix2[0, j]);
-            for (var k = 1; i < matrix1.ColumnsCount; i++)
+            var productElement = (T)(matrix1[i,0].Multiply(matrix2[0, j]));
+            for (var k = 1; k < matrix1.ColumnsCount; k++)
             { 
-                //productElement += (T)(matrix1[i,0] * matrix2[0, j]); It does not work =(
+                productElement = (T)productElement.Add(matrix1[i,k].Multiply(matrix2[k, j])); 
             }
             
             return productElement;
