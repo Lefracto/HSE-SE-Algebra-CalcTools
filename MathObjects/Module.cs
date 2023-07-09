@@ -4,9 +4,9 @@ namespace MathObjects
 {
     public class Module
     {
-        private readonly int _value;
+        private int _value;
         private readonly int _module;
-
+        
         public Module()
         {
             _module = 0;
@@ -25,7 +25,6 @@ namespace MathObjects
             }
             _value = value % _module;
         }
-        
         public Module GetInverseByAddition()
         {
             var inverse = _module - _value;
@@ -36,12 +35,21 @@ namespace MathObjects
 
             return new Module(inverse, _module);
         }
-        
-        public Module Add(Module module) => new Module(module._value + _value, _module);
-        
-        public Module Multiply(Module module) => new Module(module._value * _value, _module);
-        
-        public Module Minus(Module module)  => new Module(module._value - _value, _module);
+        public Module Add(Module module)
+        {
+            _value = module._value + _value;
+            return this;
+        }
+        public Module Multiply(Module module) 
+        {
+            _value = module._value * _value;
+            return this;
+        }
+        public Module Minus(Module module)
+        {
+            _value = module._value - _value;
+            return this;
+        }
         
         public override string ToString() => _value.ToString();
     }
