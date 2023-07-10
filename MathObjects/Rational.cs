@@ -50,7 +50,7 @@ namespace MathObjects
                 return null;
             
             Numerator = Numerator * rational.Denominator + rational.Numerator * Denominator;
-            Denominator = Denominator * rational.Denominator;
+            Denominator *= rational.Denominator;
             return this;
         }
         public override MatrixCellData Minus(MatrixCellData data)

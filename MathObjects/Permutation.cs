@@ -21,7 +21,23 @@ namespace MathObjects
             _image = new int[size];
         }
 
-        public int Sign => 1;
+        public int Sign
+        {
+            get
+            {
+                var countInversions = 0;
+                for (var i = 0; i < _image.Length; i++)
+                {
+                    for (var j = i; j < _image.Length; j++)
+                    {
+                        if (_image[i] > _image[j])
+                            countInversions++;
+                    }
+                }
+
+                return (int)Math.Pow(-1, countInversions);
+            }
+        }
 
         public Permutation NextPermutation()
         {
@@ -46,7 +62,7 @@ namespace MathObjects
             }
 
             var composePermutation = new Permutation(permutation1.Size);
-            for (int i = 0; i < permutation1.Size; i++)
+            for (var i = 0; i < permutation1.Size; i++)
             {
                 composePermutation._image[i] = permutation2._image[permutation1._image[i] - 1];
             }
