@@ -2,7 +2,7 @@
 
 namespace MathObjects
 {
-    public class Module
+    public class Module : MatrixCellData
     {
         private int _value;
         private readonly int _module;
@@ -19,38 +19,75 @@ namespace MathObjects
                 //exception
             }
             _module = module;
-            while (value < 0)
-            {
-                value += module;
-            }
+            Normilise();
             _value = value % _module;
         }
-        public Module GetInverseByAddition()
+
+        private void Normilise()
+        {
+            while (_value < 0)
+            {
+                _value += _module;
+            }
+        }
+        
+        public override MatrixCellData GetInverseByAddition()
         {
             var inverse = _module - _value;
-            while (inverse < 0)
-            {
-                inverse += _module;
-            }
-
             return new Module(inverse, _module);
         }
-        public Module Add(Module module)
+
+        public override MatrixCellData Add(MatrixCellData data)
         {
-            _value = module._value + _value;
-            return this;
-        }
-        public Module Multiply(Module module) 
-        {
-            _value = module._value * _value;
-            return this;
-        }
-        public Module Minus(Module module)
-        {
-            _value = module._value - _value;
+            if (data is not Module module) 
+                return null;
+
+            if (module._module != _module)
+            {
+                //exception
+            }
+
+            _value += module._value;
+            _value %= _module;
             return this;
         }
         
+        public override MatrixCellData Multiply(MatrixCellData data)
+        {
+            if (data is not Module module) 
+                return null;
+
+            if (module._module != _module)
+            {
+                //exception
+            }
+            
+            _value *= module._value;
+            _value %= _module;
+            return this;
+        }
+
+        public override MatrixCellData Minus(MatrixCellData data)
+        {
+            if (data is not Module module) 
+                return null;
+
+            if (module._module != _module)
+            {
+                //exception
+            }
+            
+            _value -= module._value;
+            Normilise();
+            _value %= _module;
+            return this;
+        }
+
+        public override MatrixCellData ReadCellData(string input)
+        {
+            throw new NotImplementedException();
+        }
+
         public override string ToString() => _value.ToString();
     }
 }
