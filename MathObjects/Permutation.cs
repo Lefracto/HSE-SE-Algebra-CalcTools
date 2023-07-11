@@ -38,10 +38,32 @@ namespace MathObjects
                 return (int)Math.Pow(-1, countInversions);
             }
         }
-
+        
+        private int IndexOfMin(int[] array, int i, int minValue)
+        {
+            var index = i;
+            for (var j = i; j < array.Length; j++) {
+                if (array[j] <= array[index] && array[j] > minValue) {
+                    index = j;
+                }
+            }
+            return index;
+        }
+        
         public Permutation NextPermutation()
         {
-            return this;
+            var newImage = new int[_image.Length];
+            Array.Copy(_image, newImage, _image.Length);
+            
+            for(var i = newImage.Length - 1; i > 0; --i)
+            {
+                if (newImage[i] <= newImage[i - 1]) continue;
+                (newImage[i - 1], newImage[IndexOfMin(newImage, i, newImage[i - 1])]) =
+                    (newImage[IndexOfMin(newImage, i, newImage[i - 1])], newImage[i - 1]);
+                Array.Sort(newImage, i, newImage.Length - i); 
+                break;
+            }
+            return new Permutation(newImage);
         }
 
         public Permutation GetInversedPermutation()
