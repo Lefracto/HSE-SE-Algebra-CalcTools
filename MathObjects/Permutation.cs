@@ -39,7 +39,7 @@ namespace MathObjects
             }
         }
         
-        private int IndexOfMin(int[] array, int i, int minValue)
+        private static int IndexOfMin(int[] array, int i, int minValue)
         {
             var index = i;
             for (var j = i; j < array.Length; j++) {
@@ -79,9 +79,7 @@ namespace MathObjects
         public static Permutation operator* (Permutation permutation1, Permutation permutation2)
         {
             if (permutation1.Size != permutation2.Size)
-            {
-                //exception
-            }
+                throw new ArgumentException("You cannot compose permutations with different sizes");
 
             var composePermutation = new Permutation(permutation1.Size);
             for (var i = 0; i < permutation1.Size; i++)

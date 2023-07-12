@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
+﻿using System;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace MathObjects
 {
@@ -6,18 +7,19 @@ namespace MathObjects
     {
         private int _numerator;
         private int _denominator;
+
         public int Numerator
         {
             get => _numerator;
             private set => _numerator = value;
         }
-        
+
         public int Denominator
         {
             get => _denominator;
             private set => _denominator = value;
         }
-        
+
         public Rational()
         {
             _numerator = 0;
@@ -28,22 +30,30 @@ namespace MathObjects
         {
             _numerator = numerator;
         }
-        
+
         public Rational(int numerator, int denominator)
         {
-            // make shorter
-            
             if (denominator == 0)
-            {
-                //exception;
-            }
+                throw new ArgumentException("Denominator cannot be 0");
+            
             _numerator = numerator;
             _denominator = denominator;
+            Reduce();
         }
 
         public override MatrixCellData GetInverseByAddition()
             => -this;
 
+        private static int Gcd(int a, int b)
+            => b == 0 ? a : Gcd(b, a % b);
+
+        private void Reduce()
+        {
+            var gcd = Gcd(Numerator, Denominator);
+            Numerator /= gcd;
+            Denominator /= gcd;
+        }
+        
         public override MatrixCellData Add(MatrixCellData data)
         {
             if (data is not Rational rational) 
@@ -51,6 +61,7 @@ namespace MathObjects
             
             Numerator = Numerator * rational.Denominator + rational.Numerator * Denominator;
             Denominator *= rational.Denominator;
+            Reduce();
             return this;
         }
         public override MatrixCellData Minus(MatrixCellData data)
@@ -59,7 +70,8 @@ namespace MathObjects
                 return null;
             
             Numerator = Numerator * rational.Denominator - rational.Numerator * Denominator;
-            Denominator = Denominator * rational.Denominator;
+            Denominator *= rational.Denominator;
+            Reduce();
             return this;
         }
         
@@ -70,6 +82,7 @@ namespace MathObjects
             
             Numerator *= rational.Numerator;
             Denominator *= rational.Denominator;
+            Reduce();
             return this;
         }
         
@@ -100,7 +113,6 @@ namespace MathObjects
 
             return null;
         }
-
         public override string ToString() => _denominator == 1
             ? _numerator.ToString()
             : _numerator + "/" + _denominator;

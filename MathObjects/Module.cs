@@ -16,7 +16,7 @@ namespace MathObjects
         {
             if (module <= 0)
             {
-                //exception
+                throw new ArgumentException("Module cannot be 0");
             }
             _module = module;
             Normilise();
@@ -43,9 +43,7 @@ namespace MathObjects
                 return null;
 
             if (module._module != _module)
-            {
-                //exception
-            }
+                throw new ArgumentException("You can sum only Modules with equal _module");
 
             _value += module._value;
             _value %= _module;
@@ -58,10 +56,8 @@ namespace MathObjects
                 return null;
 
             if (module._module != _module)
-            {
-                //exception
-            }
-            
+                throw new ArgumentException("You multiply sum only Modules with equal _module");
+
             _value *= module._value;
             _value %= _module;
             return this;
@@ -73,9 +69,7 @@ namespace MathObjects
                 return null;
 
             if (module._module != _module)
-            {
-                //exception
-            }
+                throw new ArgumentException("You multiply sum only Modules with equal _module");
             
             _value -= module._value;
             Normilise();
