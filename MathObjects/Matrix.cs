@@ -12,30 +12,61 @@ namespace MathObjects
         
         public Matrix(T[][] cellValues)
         {
-            //TODO: Check for an exception and additional criteria
+            if (cellValues is null)
+                throw new NullReferenceException("");
+
+            for (var i = 0; i < cellValues.Length - 1; i++)
+            {
+                if (cellValues[i].Length != cellValues[i + 1].Length)
+                    throw new ArgumentException("Matrix must have equal count of elements in each line.");
+            }
+            
             _values = cellValues;
         }
 
         private T this [int line, int column]
         {
-            //TODO: Check for an exception
-            
-            get =>  _values[line][column];
-            set => _values[line][column] = value;
+            get
+            { 
+                if (line < 0 || column < 0)
+                    throw new ArgumentException("Line or column indexes must be >0");
+
+                if (line >= _values.Length || column >= _values[0].Length)
+                    throw new ArgumentException("Line or column indexes was out of the matrix sizes");
+                
+                return _values[line][column];
+            }
+
+            set
+            {
+                if (line < 0 || column < 0)
+                    throw new ArgumentException("Line or column indexes must be >0");
+
+                if (line >= _values.Length || column >= _values[0].Length)
+                    throw new ArgumentException("Line or column indexes was out of the matrix sizes");
+                
+                _values[line][column] = value;
+            }
         }
         
         public static void ReadMatrix(Matrix<T> matrix, string input)
         {
-            //TODO: Check for an exception
-            
-            var lines = input.Split('\n');
-            for (var i = 0; i < lines.Length; i++)
+            try
             {
-                var elements = lines[i].Split(' ');
-                for (var j = 0; j < lines[i].Length; j++)
+                var lines = input.Split('\n');
+                for (var i = 0; i < lines.Length; i++)
                 {
-                    matrix._values[i][j] =  (T)matrix._values[i][j].ReadCellData(elements[j]);
+                    var elements = lines[i].Split(' ');
+                    for (var j = 0; j < lines[i].Length; j++)
+                    {
+                        matrix._values[i][j] =  (T)matrix._values[i][j].ReadCellData(elements[j]);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("There is an unknown error occured during ReadMatrix");
+                Console.WriteLine(e.Message);
             }
         }
         
@@ -58,14 +89,13 @@ namespace MathObjects
         public void AddLine(int firstLineIndex, int secondLineIndex, MatrixCellData k)
         {
             if (firstLineIndex < 0 || secondLineIndex < 0)
-            {
-                // exception
-            }
+                throw new ArgumentException("Incorrect lines indexes, they must be >0");
+
+            if (firstLineIndex >= LinesCount || secondLineIndex >= LinesCount)
+                throw new ArgumentException("Incorrect lines indexes, they must be less or equal than lines count");
 
             if (k is null)
-            {
-                //exception
-            }
+                throw new NullReferenceException("K must be non null");
             
             for (var i = 0; i < ColumnsCount; i++)
             {
@@ -76,14 +106,13 @@ namespace MathObjects
         public void AddColumn(int firstColumnIndex, int secondColumnIndex, MatrixCellData k)
         {
             if (firstColumnIndex < 0 || secondColumnIndex < 0)
-            {
-                // exception
-            }
+                throw new ArgumentException("Incorrect columns indexes, they must be >0");
+
+            if (firstColumnIndex >= LinesCount || secondColumnIndex >= LinesCount)
+                throw new ArgumentException("Incorrect columns indexes, they must be less or equal than lines count");
 
             if (k is null)
-            {
-                //exception
-            }
+                throw new NullReferenceException("K must be non null");
             
             foreach (var t in _values)
             {
@@ -95,7 +124,8 @@ namespace MathObjects
         {
             ////TODO: Determinant using Gauss
             get
-            {
+            { 
+                throw new NotImplementedException();
                 if (LinesCount != ColumnsCount)
                 {
                     //exception
@@ -119,9 +149,7 @@ namespace MathObjects
         public static Matrix<T> operator +(Matrix<T> matrix1, Matrix<T> matrix2)
         {
             if (matrix1.LinesCount != matrix2.LinesCount || matrix1.ColumnsCount != matrix2.ColumnsCount)
-            {
-                //exception
-            }
+                throw new ArgumentException("Matrix must have equal size");
             
             var newCellValues = new T[matrix1.LinesCount][];
             for (var i = 0; i < matrix1.LinesCount; i++)
@@ -142,9 +170,7 @@ namespace MathObjects
         public static Matrix<T> operator *(Matrix<T> matrix1, Matrix<T> matrix2)
         {
             if (matrix1.ColumnsCount != matrix2.LinesCount)
-            {
-                //exception
-            }
+                throw new ArgumentException("Matrices of such sizes impossible to multiply");
             
             var newCellValues = new T[matrix1.LinesCount][];
 
@@ -179,7 +205,7 @@ namespace MathObjects
                 foreach (var element in line)
                 {
                     sb.Append(element);
-                    sb.Append(" ");
+                    sb.Append(' ');
                 }
                 sb.Append('\n');
             }

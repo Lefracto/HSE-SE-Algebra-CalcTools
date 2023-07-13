@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace MathObjects
 {
@@ -95,23 +94,15 @@ namespace MathObjects
         public override MatrixCellData ReadCellData(string input)
         {
             var elements = input.Split('/');
-            switch (elements.Length)
+            return elements.Length switch
             {
-                case 2 when int.TryParse(elements[0], out var numerator) && int.TryParse(input, out var denominator):
-                    return new Rational(numerator, denominator);
-                case 2:
-                    //exception
-                    break;
-                case 1 when int.TryParse(input, out var numerator):
-                    return new Rational(numerator);
-                case 1:
-                    //exception
-                    break;
-                default:
-                    return null;
-            }
-
-            return null;
+                2 when int.TryParse(elements[0], out var numerator) && int.TryParse(input, out var denominator) =>
+                    new Rational(numerator, denominator),
+                2 => throw new ArgumentException("Incorrect input"),
+                1 when int.TryParse(input, out var numerator) => new Rational(numerator),
+                1 => throw new ArgumentException("Incorrect input"),
+                _ => throw new ArgumentException("Incorrect input, input has more than one /")
+            };
         }
         public override string ToString() => _denominator == 1
             ? _numerator.ToString()
