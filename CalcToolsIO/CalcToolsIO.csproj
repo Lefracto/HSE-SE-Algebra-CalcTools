@@ -10,4 +10,8 @@
       <ProjectReference Include="..\MathObjects\MathObjects.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="ToolsServices" />
+    </ItemGroup>
+
 </Project>
